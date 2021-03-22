@@ -531,6 +531,23 @@ class TestResourceRequest(unittest.TestCase):
         self.assertEquals(response.one(), self.record_response_create)
 
     @httpretty.activate
+    def test_update_sysid(self):
+        """:meth:`update` should return a dictionary of the updated record"""
+
+        sys_id = self.record_response_get_one[0]["sys_id"]
+
+        httpretty.register_uri(
+            httpretty.PATCH,
+            self.mock_url_builder_sys_id,
+            body=get_serialized_result(self.record_response_update),
+            status=200,
+            content_type="application/json",
+        )
+
+        updated = self.resource.update(sys_id, self.record_response_update)
+        self.assertEquals(self.record_response_update["attr1"], updated["attr1"])
+
+    @httpretty.activate
     def test_update(self):
         """:meth:`update` should return a dictionary of the updated record"""
 
@@ -543,7 +560,7 @@ class TestResourceRequest(unittest.TestCase):
         )
 
         httpretty.register_uri(
-            httpretty.PUT,
+            httpretty.PATCH,
             self.mock_url_builder_sys_id,
             body=get_serialized_result(self.record_response_update),
             status=200,
@@ -772,7 +789,7 @@ class TestResourceRequest(unittest.TestCase):
         )
 
         httpretty.register_uri(
-            httpretty.PUT,
+            httpretty.PATCH,
             self.mock_url_builder_sys_id,
             body=get_serialized_result(self.record_response_update),
             status=200,
