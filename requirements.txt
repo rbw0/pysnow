@@ -31,5 +31,5 @@ Sphinx==1.8.5
 sphinxcontrib-websupport==1.1.2
 tqdm==4.38.0
 twine==1.15.0
-urllib3==1.25.6
+urllib3==1.25.8
 webencodings==0.5.1
